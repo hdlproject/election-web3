@@ -117,3 +117,6 @@ dist
 
 # IDE-related ignorance
 .idea/
+
+# Truffle-related ignorance
+build/
