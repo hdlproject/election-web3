@@ -1,1 +1,1 @@
-simple-etherium-app
+simple-ethereum-app
