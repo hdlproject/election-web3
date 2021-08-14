@@ -16,7 +16,7 @@ contract Citizenship {
     mapping(address => Citizen) Citizens;
     address[] citizensByAddress;
 
-    constructor() public {
+    constructor() {
         admin = msg.sender;
     }
 
