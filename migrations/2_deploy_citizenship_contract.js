@@ -1,5 +1,5 @@
-const Citizenship = artifacts.require("Citizenship");
+const Citizenship = artifacts.require('Citizenship');
 
-module.exports = function (deployer) {
-    deployer.deploy(Citizenship);
+module.exports = async function(deployer) {
+  await deployer.deploy(Citizenship);
 };
