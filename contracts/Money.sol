@@ -1,60 +1,67 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-library SafeMath {// Only relevant functions
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        assert(b <= a);
-        return a - b;}
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 
-    function add(uint256 a, uint256 b) internal pure returns (uint256)   {uint256 c = a + b;
-        assert(c >= a);
-        return c;
-    }
-}
+contract Money is ERC20, ERC20Votes, ERC20Permit, AccessControl, Ownable {
+    using Address for address;
+    using SafeMath for uint;
 
-contract Money {
-    mapping(address => uint256) balances;
-    mapping(address => mapping(address => uint256)) allowed;
+    bytes32 public constant MINTER = keccak256("MINTER");
 
-    uint256 _totalSupply;
-    constructor(uint256 total) public {
-        _totalSupply = total;
-        balances[msg.sender] = _totalSupply;
-    }
+    constructor ()
+    public
+    ERC20("money", "MNY")
+    ERC20Permit("money")
+    {}
 
-    function totalSupply() public view returns (uint256) {
-        return totalSupply_;
-    }
-
-    function balanceOf(address tokenOwner) public view returns (uint) {
-        return balances[tokenOwner];
+    function addMinter(address _minter)
+    public
+    onlyOwner
+    {
+        _grantRole(MINTER, _minter);
     }
 
-    function transfer(address receiver, uint numTokens) public returns (bool) {
-        require(numTokens <= balances[msg.sender]);
-        balances[msg.sender] = balances[msg.sender].sub(numTokens);
-        balances[receiver] = balances[receiver].add(numTokens);
-        emit Transfer(msg.sender, receiver, numTokens);
-        return true;
+    function removeMinter(address _minter)
+    public
+    onlyOwner
+    {
+        _revokeRole(MINTER, _minter);
     }
 
-    function approve(address delegate, uint numTokens) public returns (bool) {
-        allowed[msg.sender][delegate] = numTokens;
-        emit Approval(msg.sender, delegate, numTokens);
-        return true;
+    function mint(address account, uint amount)
+    public
+    onlyRole(MINTER)
+    {
+        _mint(account, amount);
     }
 
-    function allowance(address owner, address delegate) public view returns (uint) {
-        return allowed[owner][delegate];
+    // For the governance purpose
+
+    function _afterTokenTransfer(address from, address to, uint256 amount)
+    internal
+    override(ERC20, ERC20Votes)
+    {
+        super._afterTokenTransfer(from, to, amount);
     }
 
-    function transferFrom(address owner, address buyer, uint numTokens) public returns (bool) {
-        require(numTokens <= balances[owner]);
-        require(numTokens <= allowed[owner][msg.sender]);
-        balances[owner] = balances[owner].sub(numTokens);
-        allowed[owner][msg.sender] = allowed[from][msg.sender] - numTokens;
-        balances[buyer] = balances[buyer].add(numTokens);
-        Transfer(owner, buyer, numTokens);
-        return true;
+    function _mint(address to, uint256 amount)
+    internal
+    override(ERC20, ERC20Votes)
+    {
+        super._mint(to, amount);
+    }
+
+    function _burn(address account, uint256 amount)
+    internal
+    override(ERC20, ERC20Votes)
+    {
+        super._burn(account, amount);
     }
 }
