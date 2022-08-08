@@ -12,5 +12,9 @@
   },
   "devDependencies": {
     "ganache-cli": "^6.12.2"
+  },
+  "engines" : {
+    "yarn" : "^1.22.18",
+    "node" : ">=17.0.0"
   }
 }
