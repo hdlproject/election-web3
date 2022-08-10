@@ -46,8 +46,15 @@ contract Badge is ERC721URIStorage, AccessControl, Ownable {
 
         _safeMint(account, newTokenId);
 
-        _setTokenURI(newItemId, tokenURI);
+        _setTokenURI(newTokenId, tokenURI);
 
         return newTokenId;
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+    public view
+    override(ERC721, AccessControl)
+    returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 }

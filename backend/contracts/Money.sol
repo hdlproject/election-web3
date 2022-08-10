@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 
-contract Money is ERC20, ERC20Votes, ERC20Permit, AccessControl, Ownable {
+contract Money is ERC20, ERC20Votes, AccessControl, Ownable {
     using Address for address;
     using SafeMath for uint;
 
