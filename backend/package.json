@@ -4,17 +4,24 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "truffle": "^5.4.5",
+    "@openzeppelin/contracts": "^4.5.0",
+    "@openzeppelin/truffle-upgrades": "^1.15.0",
+    "@truffle/hdwallet-provider": "^2.0.13",
+    "dotenv": "^16.0.1",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
-    "@openzeppelin/contracts": "^4.5.0",
-    "@openzeppelin/truffle-upgrades": "^1.15.0"
+    "truffle": "^5.4.5"
   },
   "devDependencies": {
-    "ganache-cli": "^6.12.2"
+    "ganache-cli": "^6.12.2",
+    "truffle-plugin-verify": "^0.5.27"
   },
-  "engines" : {
-    "yarn" : "^1.22.18",
-    "node" : ">=17.0.0"
+  "engines": {
+    "yarn": "^1.22.18",
+    "node": ">=17.0.0"
+  },
+  "scripts": {
+    "deploygoerli": "truffle deploy --openssl-legacy-provider --network goerli",
+    "deployropsten": "truffle deploy --openssl-legacy-provider --network ropsten"
   }
 }
