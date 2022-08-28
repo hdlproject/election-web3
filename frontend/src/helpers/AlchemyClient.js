@@ -1,51 +1,49 @@
-import {Alchemy, Network} from 'alchemy-sdk';
+import {providers, Wallet} from 'ethers';
 
 class AlchemyClient {
-    constructor() {
-        const settings = {
-            apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-            network: AlchemyClient.getAlchemyBlockchainNetwork(process.env.REACT_APP_BLOCKCHAIN_NETWORK),
-        };
-        this.alchemy = new Alchemy(settings);
-    }
+  constructor() {
+    this.alchemy = new providers.AlchemyProvider(
+      AlchemyClient.getAlchemyBlockchainNetwork(process.env.REACT_APP_BLOCKCHAIN_NETWORK),
+      process.env.REACT_APP_ALCHEMY_API_KEY,
+    );
 
-    static getAlchemyBlockchainNetwork(blockchainNetwork) {
-        switch (blockchainNetwork) {
-            case 'MAINNET':
-                return Network.ETH_MAINNET
-            case 'GOERLI':
-                return Network.ETH_GOERLI
-            case 'ROPSTEN':
-                return Network.ETH_ROPSTEN
-            default:
-                return Network.ETH_GOERLI
-        }
-    }
+    this.wallet = new Wallet(process.env.REACT_APP_PRIVATE_KEY, this.alchemy);
+  }
 
-    estimateGas(to, data, value) {
-        this.alchemy.core.estimateGas({
-            to: to,
-            data: data,
-            value: value,
-        }).then(console.log);
-    }
+  static getAlchemyBlockchainNetwork(blockchainNetwork) {
+    return blockchainNetwork.toLowerCase();
+  }
 
-    getGasPrice() {
-        this.alchemy.core.getGasPrice().then(console.log);
-    }
+  async estimateGas(to, data, value) {
+    return await this.alchemy.estimateGas({
+      to: to,
+      data: data,
+      value: value,
+    });
+  }
 
-    getMaxPriorityFeePerGas() {
-        const options = {
-            method: 'POST',
-            headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
-            body: JSON.stringify({id: 1, jsonrpc: '2.0', method: 'eth_maxPriorityFeePerGas'})
-        };
+  async getGasPrice() {
+    return await this.alchemy.getGasPrice();
+  }
 
-        fetch(process.env.REACT_APP_ALCHEMY_HTTPS, options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
-    }
+  async getMaxPriorityFeePerGas() {
+    const options = {
+      method: 'POST',
+      headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        id: 1,
+        jsonrpc: '2.0',
+        method: 'eth_maxPriorityFeePerGas',
+      }),
+    };
+
+    return await fetch(process.env.REACT_APP_ALCHEMY_HTTPS, options);
+  }
+
+  async sendTransaction(transaction) {
+    const rawTransaction = await this.wallet.signTransaction(transaction);
+    return await this.alchemy.sendTransaction(rawTransaction);
+  }
 }
 
-export default AlchemyClient;
+export default new AlchemyClient();
