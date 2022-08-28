@@ -10,7 +10,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "alchemy-sdk": "^2.0.1",
+    "ethers": "^5.7.0",
     "@mui/material": "^5.10.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
