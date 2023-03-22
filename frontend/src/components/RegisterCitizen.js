@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
+import CitizenshipContract from '../helpers/CitizenshipContract';
+
 class RegisterCitizenClass extends React.Component {
   constructor(props) {
     super(props);
@@ -25,9 +27,10 @@ class RegisterCitizenClass extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('An address was submitted: ' + this.state.address);
-    alert('An ID was submitted: ' + this.state.id);
-    alert('An age was submitted: ' + this.state.age);
+    console.log(this.state);
+    CitizenshipContract.registerCitizen(this.state.address, this.state.id, this.state.age)
+      .then(response => console.log(response))
+      .catch(err => console.log('Error: ', err));
     event.preventDefault();
   }
 

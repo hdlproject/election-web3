@@ -17,12 +17,16 @@ import {
 import AppBar from './AppBar';
 import Menu from './Menu';
 import {routes} from '../routes';
+import Web3Client from '../helpers/Web3Client';
 
 class DrawerClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      login: false,
+      address: '',
+      anchorElUser: null,
     };
 
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
@@ -38,6 +42,23 @@ class DrawerClass extends React.Component {
   handleDrawerClose = () => {
     this.setState({
       open: false,
+    });
+  };
+
+  handleLogin = () => {
+    Web3Client.getAddress()
+      .then(response => {
+        this.setState({
+          login: true,
+          address: response,
+        });
+      })
+      .catch(error => console.log(error));
+  };
+
+  handleLogout = () => {
+    this.setState({
+      login: false,
     });
   };
 
@@ -80,8 +101,11 @@ class DrawerClass extends React.Component {
           <CssBaseline/>
 
           <AppBar open={this.state.open}
+                  login={this.state.login}
+                  address={this.state.address}
                   drawerWidth={drawerWidth}
-                  handleDrawerOpen={this.handleDrawerOpen}/>
+                  handleDrawerOpen={this.handleDrawerOpen}
+                  handleLogin={this.handleLogin}/>
 
           <MuiDrawer
             sx={{
