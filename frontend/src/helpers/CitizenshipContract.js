@@ -13,8 +13,13 @@ class CitizenshipContract {
   }
 
   async registerCitizen(address, id, age) {
-    const tx = await this.contract.registerCitizen(address, id, age);
-    return await tx.wait();
+    await this.contract.registerCitizen(address, id, age)
+      .then(async tx => {
+        return await tx.wait();
+      })
+      .catch(err => {
+        console.log('Error: ', err);
+      });
   }
 }
 

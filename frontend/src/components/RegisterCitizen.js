@@ -26,11 +26,9 @@ class RegisterCitizenClass extends React.Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     console.log(this.state);
-    CitizenshipContract.registerCitizen(this.state.address, this.state.id, this.state.age)
-      .then(response => console.log(response))
-      .catch(err => console.log('Error: ', err));
+    await CitizenshipContract.registerCitizen(this.state.address, this.state.id, this.state.age)
     event.preventDefault();
   }
 
