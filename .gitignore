@@ -1,2 +1,5 @@
 # IDE-related ignorance
+
+/node_modules
+
 .idea/
