@@ -10,7 +10,7 @@ contract Citizenship {
     error CitizenAlreadyRegistered(address citizenAddress);
     error BadRequest();
 
-    event Registered(address citizenAddress);
+    event Registered(address citizenAddress, string citizenId, uint8 citizenAge);
 
     address public admin;
     mapping(address => Citizen) Citizens;
@@ -38,7 +38,7 @@ contract Citizenship {
         Citizens[_address] = citizen;
         citizensByAddress.push(_address);
 
-        emit Registered(_address);
+        emit Registered(_address, _id, _age);
     }
 
     function getCitizen(address _address) public view returns (string memory id, uint8 age) {
