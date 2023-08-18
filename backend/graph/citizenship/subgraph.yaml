@@ -1,0 +1,24 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Citizenship
+    network: goerli
+    source:
+      address: "0xe2A1A6DC1Fd80E56544173C4489563F1d3e4EBbf"
+      abi: Citizenship
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Registered
+      abis:
+        - name: Citizenship
+          file: ./abis/Citizenship.json
+      eventHandlers:
+        - event: Registered(address,string,uint8)
+          handler: handleRegistered
+      file: ./src/citizenship.ts
