@@ -8,9 +8,9 @@ contract Citizenship {
     }
 
     error CitizenAlreadyRegistered(address citizenAddress);
-    error BadRequest();
+    error CitizenInvalidId();
 
-    event Registered(address citizenAddress, string citizenId, uint8 citizenAge);
+    event CitizenRegistered(address citizenAddress, string citizenId, uint8 citizenAge);
 
     address public admin;
     mapping(address => Citizen) Citizens;
@@ -24,21 +24,21 @@ contract Citizenship {
         require(msg.sender == admin);
 
         if (bytes(_id).length == 0) {
-            revert BadRequest();
+            revert CitizenInvalidId();
         }
 
         if (bytes(Citizens[_address].id).length != 0) {
-            revert CitizenAlreadyRegistered({citizenAddress : _address});
+            revert CitizenAlreadyRegistered({citizenAddress: _address});
         }
 
         Citizen memory citizen = Citizen({
-        id : _id,
-        age : _age
+            id: _id,
+            age: _age
         });
         Citizens[_address] = citizen;
         citizensByAddress.push(_address);
 
-        emit Registered(_address, _id, _age);
+        emit CitizenRegistered(_address, _id, _age);
     }
 
     function getCitizen(address _address) public view returns (string memory id, uint8 age) {

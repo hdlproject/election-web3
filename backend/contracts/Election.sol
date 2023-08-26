@@ -22,6 +22,10 @@ contract Election {
     error ElectorNotRegistered(address electorAddress);
     error ElectorAlreadyElected(address electorAddress);
 
+    event ElecteeRegistered(address electeeAddress, string electeeId, uint8 electeeAge);
+    event ElectorRegistered(address electorAddress, string electorId, uint8 electorAge);
+    event Elected(address electeeAddress, address electorAddress, uint256 voteCount);
+
     address public admin;
     Citizenship private citizenship;
     mapping(address => Electee) Electees;
@@ -39,19 +43,21 @@ contract Election {
 
         (string memory _id, uint8 _age) = citizenship.getCitizen(_address);
         if (bytes(_id).length == 0) {
-            revert CitizenNotRegistered({citizenAddress : _address});
+            revert CitizenNotRegistered({citizenAddress: _address});
         }
         if (_age < 18) {
-            revert CitizenUnderaged({citizenAddress : _address});
+            revert CitizenUnderaged({citizenAddress: _address});
         }
 
         if (bytes(Electees[_address].id).length != 0) {
-            revert ElecteeAlreadyRegistered({electeeAddress : _address});
+            revert ElecteeAlreadyRegistered({electeeAddress: _address});
         }
 
-        Electee memory electee = Electee({id : _id, voteCount : 0});
+        Electee memory electee = Electee({id: _id, voteCount: 0});
         Electees[_address] = electee;
         electeesByAddress.push(_address);
+
+        emit ElecteeRegistered(_address, _id, _age);
     }
 
     function getElectee(address _address) public view returns (string memory id, uint8 age, uint256 voteCount) {
@@ -68,19 +74,21 @@ contract Election {
 
         (string memory _id, uint8 _age) = citizenship.getCitizen(_address);
         if (bytes(_id).length == 0) {
-            revert CitizenNotRegistered({citizenAddress : _address});
+            revert CitizenNotRegistered({citizenAddress: _address});
         }
         if (_age < 18) {
-            revert CitizenUnderaged({citizenAddress : _address});
+            revert CitizenUnderaged({citizenAddress: _address});
         }
 
         if (bytes(Electors[_address].id).length != 0) {
-            revert ElectorAlreadyRegistered({electorAddress : _address});
+            revert ElectorAlreadyRegistered({electorAddress: _address});
         }
 
-        Elector memory elector = Elector({id : _id, alreadyElected : false});
+        Elector memory elector = Elector({id: _id, alreadyElected: false});
         Electors[_address] = elector;
         electorsByAddress.push(_address);
+
+        emit ElectorRegistered(_address, _id, _age);
     }
 
     function getElector(address _address) public view returns (string memory id, uint8 age, bool alreadyElected) {
@@ -94,15 +102,15 @@ contract Election {
 
     function elect(address _address) public {
         if (bytes(Electees[_address].id).length == 0) {
-            revert ElecteeNotRegistered({electeeAddress : _address});
+            revert ElecteeNotRegistered({electeeAddress: _address});
         }
 
         if (bytes(Electors[msg.sender].id).length == 0) {
-            revert ElectorNotRegistered({electorAddress : msg.sender});
+            revert ElectorNotRegistered({electorAddress: msg.sender});
         }
 
         if (Electors[msg.sender].alreadyElected == true) {
-            revert ElectorAlreadyElected({electorAddress : msg.sender});
+            revert ElectorAlreadyElected({electorAddress: msg.sender});
         }
 
         Elector memory elector = Electors[msg.sender];
@@ -112,5 +120,7 @@ contract Election {
         Electee memory electee = Electees[_address];
         electee.voteCount += 1;
         Electees[_address] = electee;
+
+        emit Elected(_address, msg.sender, electee.voteCount);
     }
 }
