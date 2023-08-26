@@ -2,6 +2,8 @@ import FaceIcon from '@mui/icons-material/Face';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import RegisterCitizen from './components/RegisterCitizen';
 import RegisterElectee from "./components/RegisterElectee";
+import RegisterElector from "./components/RegisterElector";
+import Elect from "./components/Elect";
 
 export const routes = [
   {
@@ -23,11 +25,13 @@ export const routes = [
     id: 'register_elector',
     name: 'Register Elector',
     icon: <FaceIcon/>,
+    page: <RegisterElector/>,
   },
   {
     path: '/elect',
     id: 'elect',
     name: 'Elect',
     icon: <HowToVoteIcon/>,
+    page: <Elect/>,
   },
 ];
