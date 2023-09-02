@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import ElectionContract from '../helpers/ElectionContract';
+import ElectionContract from '../../helpers/ElectionContract';
 
-class RegisterElecteeClass extends React.Component {
+class ElectClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +26,7 @@ class RegisterElecteeClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await ElectionContract.registerElectee(this.state.address)
+    await ElectionContract.elect(this.state.address)
     event.preventDefault();
   }
 
@@ -42,13 +42,13 @@ class RegisterElecteeClass extends React.Component {
           type="submit" fullWidth variant="contained" color="primary"
           sx={{m: 1}} onClick={this.handleSubmit}
         >
-          Register
+          Elect
         </Button>
       </Box>
     );
   }
 }
 
-export default function RegisterElectee(props) {
-  return <RegisterElecteeClass {...props}/>;
+export default function Elect(props) {
+  return <ElectClass {...props}/>;
 };

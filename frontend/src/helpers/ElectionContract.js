@@ -41,6 +41,26 @@ class ElectionContract {
                 console.log('Error: ', err);
             });
     }
+
+    async start() {
+        await this.contract.start()
+            .then(async tx => {
+                return await tx.wait();
+            })
+            .catch(err => {
+                console.log('Error: ', err);
+            });
+    }
+
+    async finish() {
+        await this.contract.start()
+            .then(async tx => {
+                return await tx.wait();
+            })
+            .catch(err => {
+                console.log('Error: ', err);
+            });
+    }
 }
 
 export default new ElectionContract();

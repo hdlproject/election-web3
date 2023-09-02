@@ -5,15 +5,14 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import CitizenshipContract from '../helpers/CitizenshipContract';
+import MoneyContract from '../../helpers/MoneyContract';
 
-class RegisterCitizenClass extends React.Component {
+class MintClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       address: '',
-      id: '',
-      age: 0,
+      amount: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,7 +27,7 @@ class RegisterCitizenClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await CitizenshipContract.registerCitizen(this.state.address, this.state.id, this.state.age)
+    await MoneyContract.mint(this.state.address, this.state.amount)
     event.preventDefault();
   }
 
@@ -41,26 +40,21 @@ class RegisterCitizenClass extends React.Component {
                          onChange={this.handleChange} label="Address"/>
         </FormControl>
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
-          <InputLabel htmlFor="id">ID</InputLabel>
-          <OutlinedInput id="id" type="text" value={this.state.id}
-                         onChange={this.handleChange} label="ID"/>
-        </FormControl>
-        <FormControl fullWidth sx={{m: 1}} variant="outlined">
-          <InputLabel htmlFor="age">Age</InputLabel>
-          <OutlinedInput id="age" type="number" value={this.state.age}
-                         onChange={this.handleChange} label="Age"/>
+          <InputLabel htmlFor="amount">Amount</InputLabel>
+          <OutlinedInput id="amount" type="number" value={this.state.amount}
+                         onChange={this.handleChange} label="Amount"/>
         </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"
           sx={{m: 1}} onClick={this.handleSubmit}
         >
-          Register
+          Mint
         </Button>
       </Box>
     );
   }
 }
 
-export default function RegisterCitizen(props) {
-  return <RegisterCitizenClass {...props}/>;
+export default function Mint(props) {
+  return <MintClass {...props}/>;
 };

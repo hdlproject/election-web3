@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import ElectionContract from '../helpers/ElectionContract';
+import MoneyContract from '../../helpers/MoneyContract';
 
-class ElectClass extends React.Component {
+class AddMinterClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +26,7 @@ class ElectClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await ElectionContract.elect(this.state.address)
+    await MoneyContract.addMinter(this.state.address)
     event.preventDefault();
   }
 
@@ -42,13 +42,13 @@ class ElectClass extends React.Component {
           type="submit" fullWidth variant="contained" color="primary"
           sx={{m: 1}} onClick={this.handleSubmit}
         >
-          Register
+          Add Minter
         </Button>
       </Box>
     );
   }
 }
 
-export default function Elect(props) {
-  return <ElectClass {...props}/>;
+export default function AddMinter(props) {
+  return <AddMinterClass {...props}/>;
 };

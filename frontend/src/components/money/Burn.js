@@ -5,13 +5,14 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import ElectionContract from '../helpers/ElectionContract';
+import MoneyContract from '../../helpers/MoneyContract';
 
-class RegisterElectorClass extends React.Component {
+class BurnClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       address: '',
+      amount: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +27,7 @@ class RegisterElectorClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await ElectionContract.registerElector(this.state.address)
+    await MoneyContract.burn(this.state.address, this.state.amount)
     event.preventDefault();
   }
 
@@ -38,17 +39,22 @@ class RegisterElectorClass extends React.Component {
           <OutlinedInput id="address" type="text" value={this.state.address}
                          onChange={this.handleChange} label="Address"/>
         </FormControl>
+        <FormControl fullWidth sx={{m: 1}} variant="outlined">
+          <InputLabel htmlFor="amount">Amount</InputLabel>
+          <OutlinedInput id="amount" type="number" value={this.state.amount}
+                         onChange={this.handleChange} label="Amount"/>
+        </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"
           sx={{m: 1}} onClick={this.handleSubmit}
         >
-          Register
+          Burn
         </Button>
       </Box>
     );
   }
 }
 
-export default function RegisterElector(props) {
-  return <RegisterElectorClass {...props}/>;
+export default function Burn(props) {
+  return <BurnClass {...props}/>;
 };
