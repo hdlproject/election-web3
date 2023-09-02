@@ -1,25 +1,38 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "./Citizenship.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 
-contract Money is ERC20, ERC20Votes, AccessControl, Ownable {
+contract Money is ERC20, AccessControl, Ownable {
     using Address for address;
     using SafeMath for uint;
 
     bytes32 public constant MINTER = keccak256("MINTER");
 
-    constructor ()
-    public
+    Citizenship private citizenship;
+
+    error CitizenNotRegistered(address citizenAddress);
+
+    constructor (address citizenshipContractAddress)
     ERC20("money", "MNY")
-    ERC20Permit("money")
-    {}
+    {
+        citizenship = Citizenship(citizenshipContractAddress);
+    }
+
+    modifier onlyCitizen(address _address) {
+        (string memory _id, uint8 _age) = citizenship.getCitizen(_address);
+
+        if (bytes(_id).length == 0) {
+            revert CitizenNotRegistered({citizenAddress: _address});
+        }
+
+        _;
+    }
 
     function addMinter(address _minter)
     public
@@ -42,26 +55,33 @@ contract Money is ERC20, ERC20Votes, AccessControl, Ownable {
         _mint(account, amount);
     }
 
-    // For the governance purpose
-
-    function _afterTokenTransfer(address from, address to, uint256 amount)
-    internal
-    override(ERC20, ERC20Votes)
-    {
-        super._afterTokenTransfer(from, to, amount);
-    }
-
     function _mint(address to, uint256 amount)
     internal
-    override(ERC20, ERC20Votes)
+    override(ERC20)
     {
         super._mint(to, amount);
     }
 
+    function burn(address account, uint amount)
+    public
+    onlyRole(MINTER)
+    {
+        _burn(account, amount);
+    }
+
     function _burn(address account, uint256 amount)
     internal
-    override(ERC20, ERC20Votes)
+    override(ERC20)
     {
         super._burn(account, amount);
+    }
+
+    function transfer(address to, uint256 amount)
+    public
+    override(ERC20)
+    onlyCitizen(msg.sender)
+    onlyCitizen(to) returns (bool)
+    {
+        return super.transfer(to, amount);
     }
 }
