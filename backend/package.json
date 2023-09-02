@@ -21,7 +21,7 @@
     "node": ">=17.0.0"
   },
   "scripts": {
-    "deploygoerli": "truffle deploy --openssl-legacy-provider --network goerli",
-    "deployropsten": "truffle deploy --openssl-legacy-provider --network ropsten"
+    "deploygoerli": "truffle migrate --openssl-legacy-provider --network goerli",
+    "verifygoerli": "truffle run verify --network goerli"
   }
 }
