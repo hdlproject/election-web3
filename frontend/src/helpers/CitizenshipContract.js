@@ -21,6 +21,36 @@ class CitizenshipContract {
         console.log('Error: ', err);
       });
   }
+
+  async addOwner(address) {
+    await this.contract.addOwner(address)
+        .then(async tx => {
+          return await tx.wait();
+        })
+        .catch(err => {
+          console.log('Error: ', err);
+        });
+  }
+
+  async removeOwner(address) {
+    await this.contract.removeOwner(address)
+        .then(async tx => {
+          return await tx.wait();
+        })
+        .catch(err => {
+          console.log('Error: ', err);
+        });
+  }
+
+    async changePresident(address) {
+        await this.contract.changePresident(address)
+            .then(async tx => {
+                return await tx.wait();
+            })
+            .catch(err => {
+                console.log('Error: ', err);
+            });
+    }
 }
 
 export default new CitizenshipContract();

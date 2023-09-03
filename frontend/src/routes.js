@@ -1,12 +1,13 @@
 import FaceIcon from '@mui/icons-material/Face';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import RegisterCitizen from './components/citizenship/RegisterCitizen';
+import AddOwner from "./components/citizenship/AddOwner";
+import RemoveOwner from "./components/citizenship/RemoveOwner";
+import ChangePresident from "./components/citizenship/ChangePresident";
 import RegisterElectee from "./components/election/RegisterElectee";
 import RegisterElector from "./components/election/RegisterElector";
 import Elect from "./components/election/Elect";
 import StartFinish from "./components/election/StartFinish";
-import AddMinter from "./components/money/AddMinter";
-import RemoveMinter from "./components/money/RemoveMinter";
 import Mint from "./components/money/Mint";
 import Burn from "./components/money/Burn";
 import Transfer from "./components/money/Transfer";
@@ -18,6 +19,27 @@ export const routes = [
     name: 'Register Citizen',
     icon: <FaceIcon/>,
     page: <RegisterCitizen/>,
+  },
+  {
+    path: '/add-owner',
+    id: 'add_owner',
+    name: 'Add Owner',
+    icon: <HowToVoteIcon/>,
+    page: <AddOwner/>,
+  },
+  {
+    path: '/remove-owner',
+    id: 'remove_owner',
+    name: 'Remove Owner',
+    icon: <HowToVoteIcon/>,
+    page: <RemoveOwner/>,
+  },
+  {
+    path: '/change-president',
+    id: 'change_president',
+    name: 'Change President',
+    icon: <HowToVoteIcon/>,
+    page: <ChangePresident/>,
   },
 
   {
@@ -49,20 +71,6 @@ export const routes = [
     page: <StartFinish/>,
   },
 
-  {
-    path: '/add-minter',
-    id: 'add_minter',
-    name: 'Add Minter',
-    icon: <HowToVoteIcon/>,
-    page: <AddMinter/>,
-  },
-  {
-    path: '/remove-minter',
-    id: 'remove_minter',
-    name: 'Remove Minter',
-    icon: <HowToVoteIcon/>,
-    page: <RemoveMinter/>,
-  },
   {
     path: '/mint',
     id: 'mint',

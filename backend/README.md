@@ -21,3 +21,9 @@ $ cd citizenship
 $ graph codegen && graph build
 $ graph deploy --studio citizenship
 ```
+
+## How to Test
+List of accounts
+- 0xB5A65D021f071269dcfB7B61a85da8F99b40c89f
+- 0x6063CC1113940e799e62CDa87812784C0A96e34e
+- 0x5ab421EC3788cfe61044944Bb47B63336951a4C4
