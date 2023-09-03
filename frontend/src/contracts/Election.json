@@ -62,7 +62,7 @@
         "type": "address"
       }
     ],
-    "name": "ElectorAlreadyElected",
+    "name": "ElectorAlreadyElect",
     "type": "error"
   },
   {
@@ -86,6 +86,93 @@
     ],
     "name": "ElectorNotRegistered",
     "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "electeeAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "electorAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "voteCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Elected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "electeeAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "electeeId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "electeeAge",
+        "type": "uint8"
+      }
+    ],
+    "name": "ElecteeRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "ElectionFinished",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "ElectionStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "electorAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "electorId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "electorAge",
+        "type": "uint8"
+      }
+    ],
+    "name": "ElectorRegistered",
+    "type": "event"
   },
   {
     "inputs": [],
@@ -193,7 +280,7 @@
       },
       {
         "internalType": "bool",
-        "name": "alreadyElected",
+        "name": "alreadyElect",
         "type": "bool"
       }
     ],
@@ -224,6 +311,34 @@
       }
     ],
     "name": "elect",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getBestElectee",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "electeeAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "start",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "finish",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

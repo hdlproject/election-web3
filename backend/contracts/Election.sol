@@ -30,7 +30,6 @@ contract Election {
     event ElectionFinished();
 
     Citizenship private citizenship;
-    Money private money;
 
     address public admin;
     mapping(address => Electee) electees;
@@ -42,10 +41,9 @@ contract Election {
     Electee bestElectee;
     address bestElecteeAddress;
 
-    constructor(address citizenshipContractAddress, address moneyContractAddress) {
+    constructor(address citizenshipContractAddress) {
         admin = msg.sender;
         citizenship = Citizenship(citizenshipContractAddress);
-        money = Money(moneyContractAddress);
     }
 
     modifier notStarted() {
@@ -169,7 +167,7 @@ contract Election {
     function finish() public notFinished {
         isFinished = true;
 
-        money.transferOwnership(bestElecteeAddress);
+        citizenship.changePresident(bestElecteeAddress);
 
         emit ElectionFinished();
     }

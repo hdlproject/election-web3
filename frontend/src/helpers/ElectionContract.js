@@ -53,7 +53,7 @@ class ElectionContract {
     }
 
     async finish() {
-        await this.contract.start()
+        await this.contract.finish()
             .then(async tx => {
                 return await tx.wait();
             })
