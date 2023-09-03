@@ -5,14 +5,13 @@ import "./Citizenship.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Money is ERC20, AccessControl, Ownable {
+contract Money is ERC20, Ownable {
     using Address for address;
     using SafeMath for uint;
 
-    bytes32 public constant MINTER = keccak256("MINTER");
+    bytes32 public constant MINISTER = keccak256("MINISTER");
+    bytes32 public constant PRESIDENT = keccak256("PRESIDENT");
 
     Citizenship private citizenship;
 
@@ -34,23 +33,14 @@ contract Money is ERC20, AccessControl, Ownable {
         _;
     }
 
-    function addMinter(address _minter)
-    public
-    onlyOwner
-    {
-        _grantRole(MINTER, _minter);
-    }
-
-    function removeMinter(address _minter)
-    public
-    onlyOwner
-    {
-        _revokeRole(MINTER, _minter);
+    modifier onlyPresident(address _address) {
+        require(citizenship.hasRole(citizenship.PRESIDENT(), _address), "Money: not a president");
+        _;
     }
 
     function mint(address account, uint amount)
     public
-    onlyRole(MINTER)
+    onlyPresident(account)
     {
         _mint(account, amount);
     }
@@ -64,7 +54,7 @@ contract Money is ERC20, AccessControl, Ownable {
 
     function burn(address account, uint amount)
     public
-    onlyRole(MINTER)
+    onlyPresident(account)
     {
         _burn(account, amount);
     }

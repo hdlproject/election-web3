@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import MoneyContract from '../../helpers/MoneyContract';
 import CitizenshipContract from "../../helpers/CitizenshipContract";
 
 class RemoveOwnerClass extends React.Component {

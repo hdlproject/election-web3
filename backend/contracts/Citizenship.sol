@@ -15,11 +15,11 @@ contract Citizenship is AccessControl, Ownable {
 
     error CitizenAlreadyRegistered(address citizenAddress);
     error CitizenInvalidId();
-    error OwnerAdded(address ownerAddress);
-    error OwnerRemoved(address ownerAddress);
-    error PresidentChanged(address oldPresidentAddress, address newPresidentAddress);
 
     event CitizenRegistered(address citizenAddress, string citizenId, uint8 citizenAge);
+    event OwnerAdded(address ownerAddress);
+    event OwnerRemoved(address ownerAddress);
+    event PresidentChanged(address oldPresidentAddress, address newPresidentAddress);
 
     address public admin;
     mapping(address => Citizen) citizens;

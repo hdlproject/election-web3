@@ -12,26 +12,6 @@ class MoneyContract {
       AlchemyClient.wallet);
   }
 
-    async addMinter(address) {
-        await this.contract.addMinter(address)
-            .then(async tx => {
-                return await tx.wait();
-            })
-            .catch(err => {
-                console.log('Error: ', err);
-            });
-    }
-
-    async removeMinter(address) {
-        await this.contract.removeMinter(address)
-            .then(async tx => {
-                return await tx.wait();
-            })
-            .catch(err => {
-                console.log('Error: ', err);
-            });
-    }
-
   async mint(address, amount) {
     await this.contract.mint(address, amount)
       .then(async tx => {
