@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "./Citizenship.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -13,32 +14,27 @@ contract Badge is ERC721URIStorage, AccessControl, Ownable {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
 
-    bytes32 public constant MINTER = keccak256("MINTER");
-
+    Citizenship private citizenship;
     Counters.Counter private _tokenIds;
 
-    constructor ()
-    public
-    ERC721("badge", "BDG")
-    {}
+    uint256 public ministerBadgeId;
 
-    function addMinter(address _minter)
-    public
-    onlyOwner
+    event MinisterChanged(address oldMinisterAddress, address newMinisterAddress);
+
+    constructor (address citizenshipContractAddress)
+    ERC721("badge", "BDG")
     {
-        _grantRole(MINTER, _minter);
+        citizenship = Citizenship(citizenshipContractAddress);
     }
 
-    function removeMinter(address _minter)
-    public
-    onlyOwner
-    {
-        _revokeRole(MINTER, _minter);
+    modifier onlyPresident(address _address) {
+        require(citizenship.hasRole(citizenship.PRESIDENT(), _address), "Badge: not a president");
+        _;
     }
 
     function mint(address account, string memory tokenURI)
     public
-    onlyRole(MINTER)
+    onlyPresident(msg.sender)
     returns (uint256)
     {
         _tokenIds.increment();
@@ -49,6 +45,23 @@ contract Badge is ERC721URIStorage, AccessControl, Ownable {
         _setTokenURI(newTokenId, tokenURI);
 
         return newTokenId;
+    }
+
+    function burn(uint256 tokenId)
+    public
+    onlyPresident(msg.sender)
+    {
+        _burn(tokenId);
+    }
+
+    function changeMinister(address _address)
+    public
+    onlyPresident(msg.sender)
+    {
+        address currentMinisterAddress = badge.ownerOf(ministerBadgeId);
+        safeTransferFrom(currentMinisterAddress, _address, ministerBadgeId);
+
+        emit MinisterChanged(currentMinisterAddress, _address);
     }
 
     function supportsInterface(bytes4 interfaceId)

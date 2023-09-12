@@ -10,9 +10,6 @@ contract Money is ERC20, Ownable {
     using Address for address;
     using SafeMath for uint;
 
-    bytes32 public constant MINISTER = keccak256("MINISTER");
-    bytes32 public constant PRESIDENT = keccak256("PRESIDENT");
-
     Citizenship private citizenship;
 
     error CitizenNotRegistered(address citizenAddress);
@@ -40,7 +37,7 @@ contract Money is ERC20, Ownable {
 
     function mint(address account, uint amount)
     public
-    onlyPresident(account)
+    onlyPresident(msg.sender)
     {
         _mint(account, amount);
     }
@@ -54,7 +51,7 @@ contract Money is ERC20, Ownable {
 
     function burn(address account, uint amount)
     public
-    onlyPresident(account)
+    onlyPresident(msg.sender)
     {
         _burn(account, amount);
     }
