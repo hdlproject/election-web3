@@ -12,6 +12,7 @@ import Mint from "./components/money/Mint";
 import Burn from "./components/money/Burn";
 import Transfer from "./components/money/Transfer";
 import ChangeMinister from "./components/badge/ChangeMinister";
+import SetMinisterBadgeId from "./components/badge/SetMinisterBadgeId";
 
 export const routes = [
   {
@@ -94,6 +95,13 @@ export const routes = [
     page: <Transfer/>,
   },
 
+  {
+    path: '/set-minister-badge-id',
+    id: 'set_minister_badge_id',
+    name: 'Set Minister Badge Id',
+    icon: <HowToVoteIcon/>,
+    page: <SetMinisterBadgeId/>,
+  },
   {
     path: '/change-minister',
     id: 'change_minister',

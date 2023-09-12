@@ -12,6 +12,16 @@ class BadgeContract {
       AlchemyClient.wallet);
   }
 
+    async setMinisterBadgeId(tokenId) {
+        await this.contract.setMinisterBadgeId(tokenId)
+            .then(async tx => {
+                return await tx.wait();
+            })
+            .catch(err => {
+                console.log('Error: ', err);
+            });
+    }
+
     async changeMinister(address) {
         await this.contract.changeMinister(address)
             .then(async tx => {

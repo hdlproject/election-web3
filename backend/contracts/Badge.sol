@@ -17,9 +17,12 @@ contract Badge is ERC721URIStorage, AccessControl, Ownable {
     Citizenship private citizenship;
     Counters.Counter private _tokenIds;
 
-    uint256 public ministerBadgeId;
+    uint256 ministerBadgeId;
 
     event MinisterChanged(address oldMinisterAddress, address newMinisterAddress);
+
+    error BadgeInvalidTokenId();
+    error BadgeTokenIdCannotBeChanged();
 
     constructor (address citizenshipContractAddress)
     ERC721("badge", "BDG")
@@ -52,6 +55,21 @@ contract Badge is ERC721URIStorage, AccessControl, Ownable {
     onlyPresident(msg.sender)
     {
         _burn(tokenId);
+    }
+
+    function setMinisterBadgeId(uint256 tokenId)
+    public
+    onlyPresident(msg.sender)
+    {
+        if (ministerBadgeId != 0) {
+            revert BadgeTokenIdCannotBeChanged();
+        }
+
+        if (ownerOf(tokenId) == address(0)) {
+            revert BadgeInvalidTokenId();
+        }
+
+        ministerBadgeId = tokenId;
     }
 
     function changeMinister(address _address)
