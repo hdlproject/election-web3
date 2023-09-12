@@ -3,8 +3,8 @@ import {providers, Wallet} from 'ethers';
 class AlchemyClient {
   constructor() {
     this.alchemy = new providers.AlchemyProvider(
-        AlchemyClient.getAlchemyBlockchainNetwork(process.env.REACT_APP_BLOCKCHAIN_NETWORK),
-        process.env.REACT_APP_ALCHEMY_API_KEY,
+      AlchemyClient.getAlchemyBlockchainNetwork(process.env.REACT_APP_BLOCKCHAIN_NETWORK),
+      process.env.REACT_APP_ALCHEMY_API_KEY,
     );
 
     this.wallet = new Wallet(process.env.REACT_APP_PRIVATE_KEY, this.alchemy);

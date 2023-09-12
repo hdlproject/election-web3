@@ -47,13 +47,13 @@ class DrawerClass extends React.Component {
 
   handleLogin = () => {
     Web3Client.getAddress()
-        .then((response) => {
-          this.setState({
-            login: true,
-            address: response,
-          });
-        })
-        .catch((error) => console.log(error));
+      .then((response) => {
+        this.setState({
+          login: true,
+          address: response,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   handleLogout = () => {
@@ -68,22 +68,22 @@ class DrawerClass extends React.Component {
     const drawerWidth = 240;
 
     const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
-        ({theme, open}) => ({
-          flexGrow: 1,
-          padding: theme.spacing(3),
-          transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-          }),
-          marginLeft: `-${drawerWidth}px`,
-          ...(open && {
-            transition: theme.transitions.create('margin', {
-              easing: theme.transitions.easing.easeOut,
-              duration: theme.transitions.duration.enteringScreen,
-            }),
-            marginLeft: 0,
-          }),
+      ({theme, open}) => ({
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
         }),
+        marginLeft: `-${drawerWidth}px`,
+        ...(open && {
+          transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+          marginLeft: 0,
+        }),
+      }),
     );
 
     const DrawerHeader = styled('div')(({theme}) => ({
