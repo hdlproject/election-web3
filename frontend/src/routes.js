@@ -11,6 +11,7 @@ import StartFinish from "./components/election/StartFinish";
 import Mint from "./components/money/Mint";
 import Burn from "./components/money/Burn";
 import Transfer from "./components/money/Transfer";
+import ChangeMinister from "./components/badge/ChangeMinister";
 
 export const routes = [
   {
@@ -91,5 +92,13 @@ export const routes = [
     name: 'Transfer',
     icon: <HowToVoteIcon/>,
     page: <Transfer/>,
+  },
+
+  {
+    path: '/change-minister',
+    id: 'change_minister',
+    name: 'Change Minister',
+    icon: <HowToVoteIcon/>,
+    page: <ChangeMinister/>,
   },
 ];
