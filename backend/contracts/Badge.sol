@@ -58,7 +58,7 @@ contract Badge is ERC721URIStorage, AccessControl, Ownable {
     public
     onlyPresident(msg.sender)
     {
-        address currentMinisterAddress = badge.ownerOf(ministerBadgeId);
+        address currentMinisterAddress = ownerOf(ministerBadgeId);
         safeTransferFrom(currentMinisterAddress, _address, ministerBadgeId);
 
         emit MinisterChanged(currentMinisterAddress, _address);
