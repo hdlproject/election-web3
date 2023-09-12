@@ -28,7 +28,7 @@ class RegisterCitizenClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await CitizenshipContract.registerCitizen(this.state.address, this.state.id, this.state.age)
+    await CitizenshipContract.registerCitizen(this.state.address, this.state.id, this.state.age);
     event.preventDefault();
   }
 
@@ -38,17 +38,17 @@ class RegisterCitizenClass extends React.Component {
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="address">Address</InputLabel>
           <OutlinedInput id="address" type="text" value={this.state.address}
-                         onChange={this.handleChange} label="Address"/>
+            onChange={this.handleChange} label="Address"/>
         </FormControl>
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="id">ID</InputLabel>
           <OutlinedInput id="id" type="text" value={this.state.id}
-                         onChange={this.handleChange} label="ID"/>
+            onChange={this.handleChange} label="ID"/>
         </FormControl>
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="age">Age</InputLabel>
           <OutlinedInput id="age" type="number" value={this.state.age}
-                         onChange={this.handleChange} label="Age"/>
+            onChange={this.handleChange} label="Age"/>
         </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"

@@ -13,14 +13,14 @@ class StartFinishClass extends React.Component {
   }
 
   async handleStart(event) {
-    console.log("start");
-    await ElectionContract.start()
+    console.log('start');
+    await ElectionContract.start();
     event.preventDefault();
   }
 
   async handleFinish(event) {
-    console.log("finish");
-    await ElectionContract.finish()
+    console.log('finish');
+    await ElectionContract.finish();
     event.preventDefault();
   }
 
@@ -35,8 +35,8 @@ class StartFinishClass extends React.Component {
         </Button>
 
         <Button
-            type="submit" fullWidth variant="contained" color="primary"
-            sx={{m: 1}} onClick={this.handleFinish}
+          type="submit" fullWidth variant="contained" color="primary"
+          sx={{m: 1}} onClick={this.handleFinish}
         >
           Finish
         </Button>

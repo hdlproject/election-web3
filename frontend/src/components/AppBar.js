@@ -91,12 +91,12 @@ class AppBarClass extends React.Component {
           </IconButton>
 
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}
-                      onClick={this.handleClick}>
+            onClick={this.handleClick}>
             Simple Ethereum App
           </Typography>
 
-          {this.props.login
-            ? <Box sx={{flexGrow: 0}}>
+          {this.props.login ?
+            <Box sx={{flexGrow: 0}}>
               <Tooltip title="Open settings">
                 <IconButton onClick={this.handleOpenUserMenu} sx={{p: 0}}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
@@ -124,8 +124,8 @@ class AppBarClass extends React.Component {
                   </MenuItem>
                 ))}
               </Popover>
-            </Box>
-            : <Button onClick={this.handleLogin} color="inherit">Login</Button>
+            </Box> :
+            <Button onClick={this.handleLogin} color="inherit">Login</Button>
           }
         </Toolbar>
       </StyledMuiAppBar>

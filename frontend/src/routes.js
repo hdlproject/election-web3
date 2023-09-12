@@ -1,18 +1,18 @@
 import FaceIcon from '@mui/icons-material/Face';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import RegisterCitizen from './components/citizenship/RegisterCitizen';
-import AddOwner from "./components/citizenship/AddOwner";
-import RemoveOwner from "./components/citizenship/RemoveOwner";
-import ChangePresident from "./components/citizenship/ChangePresident";
-import RegisterElectee from "./components/election/RegisterElectee";
-import RegisterElector from "./components/election/RegisterElector";
-import Elect from "./components/election/Elect";
-import StartFinish from "./components/election/StartFinish";
-import Mint from "./components/money/Mint";
-import Burn from "./components/money/Burn";
-import Transfer from "./components/money/Transfer";
-import ChangeMinister from "./components/badge/ChangeMinister";
-import SetMinisterBadgeId from "./components/badge/SetMinisterBadgeId";
+import AddOwner from './components/citizenship/AddOwner';
+import RemoveOwner from './components/citizenship/RemoveOwner';
+import ChangePresident from './components/citizenship/ChangePresident';
+import RegisterElectee from './components/election/RegisterElectee';
+import RegisterElector from './components/election/RegisterElector';
+import Elect from './components/election/Elect';
+import StartFinish from './components/election/StartFinish';
+import Mint from './components/money/Mint';
+import Burn from './components/money/Burn';
+import Transfer from './components/money/Transfer';
+import ChangeMinister from './components/badge/ChangeMinister';
+import SetMinisterBadgeId from './components/badge/SetMinisterBadgeId';
 
 export const routes = [
   {

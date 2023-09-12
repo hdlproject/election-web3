@@ -24,7 +24,7 @@ class MenuClass extends React.Component {
       <List>
         {routes.map((item) => (
           <ListItem key={item.id} disablePadding
-                    onClick={() => this.handleClick(item.path)}>
+            onClick={() => this.handleClick(item.path)}>
             <ListItemButton>
               <ListItemIcon>
                 {item.icon}

@@ -27,7 +27,7 @@ class TransferClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await MoneyContract.transfer(this.state.address, this.state.amount)
+    await MoneyContract.transfer(this.state.address, this.state.amount);
     event.preventDefault();
   }
 
@@ -37,12 +37,12 @@ class TransferClass extends React.Component {
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="address">Address</InputLabel>
           <OutlinedInput id="address" type="text" value={this.state.address}
-                         onChange={this.handleChange} label="Address"/>
+            onChange={this.handleChange} label="Address"/>
         </FormControl>
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="amount">Amount</InputLabel>
           <OutlinedInput id="amount" type="number" value={this.state.amount}
-                         onChange={this.handleChange} label="Amount"/>
+            onChange={this.handleChange} label="Amount"/>
         </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"

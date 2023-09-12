@@ -47,13 +47,13 @@ class DrawerClass extends React.Component {
 
   handleLogin = () => {
     Web3Client.getAddress()
-      .then(response => {
-        this.setState({
-          login: true,
-          address: response,
-        });
-      })
-      .catch(error => console.log(error));
+        .then((response) => {
+          this.setState({
+            login: true,
+            address: response,
+          });
+        })
+        .catch((error) => console.log(error));
   };
 
   handleLogout = () => {
@@ -68,22 +68,22 @@ class DrawerClass extends React.Component {
     const drawerWidth = 240;
 
     const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
-      ({theme, open}) => ({
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: `-${drawerWidth}px`,
-        ...(open && {
+        ({theme, open}) => ({
+          flexGrow: 1,
+          padding: theme.spacing(3),
           transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
           }),
-          marginLeft: 0,
+          marginLeft: `-${drawerWidth}px`,
+          ...(open && {
+            transition: theme.transitions.create('margin', {
+              easing: theme.transitions.easing.easeOut,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+            marginLeft: 0,
+          }),
         }),
-      }),
     );
 
     const DrawerHeader = styled('div')(({theme}) => ({
@@ -101,16 +101,16 @@ class DrawerClass extends React.Component {
           <CssBaseline/>
 
           <AppBar open={this.state.open}
-                  login={this.state.login}
-                  address={this.state.address}
-                  drawerWidth={drawerWidth}
-                  handleDrawerOpen={this.handleDrawerOpen}
-                  handleLogin={this.handleLogin}/>
+            login={this.state.login}
+            address={this.state.address}
+            drawerWidth={drawerWidth}
+            handleDrawerOpen={this.handleDrawerOpen}
+            handleLogin={this.handleLogin}/>
 
           <MuiDrawer
             sx={{
-              width: drawerWidth,
-              flexShrink: 0,
+              'width': drawerWidth,
+              'flexShrink': 0,
               '& .MuiDrawer-paper': {
                 width: drawerWidth,
                 boxSizing: 'border-box',
@@ -143,7 +143,7 @@ class DrawerClass extends React.Component {
 
               {routes.map((item) => (
                 <Route path={item.path} key={JSON.stringify(item)}
-                       element={item.page}/>
+                  element={item.page}/>
               ))}
             </Routes>
           </Main>

@@ -26,7 +26,7 @@ class ElectClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await ElectionContract.elect(this.state.address)
+    await ElectionContract.elect(this.state.address);
     event.preventDefault();
   }
 
@@ -36,7 +36,7 @@ class ElectClass extends React.Component {
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="address">Address</InputLabel>
           <OutlinedInput id="address" type="text" value={this.state.address}
-                         onChange={this.handleChange} label="Address"/>
+            onChange={this.handleChange} label="Address"/>
         </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"

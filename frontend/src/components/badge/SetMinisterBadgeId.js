@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import BadgeContract from "../../helpers/BadgeContract";
+import BadgeContract from '../../helpers/BadgeContract';
 
 class SetMinisterBadgeIdClass extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class SetMinisterBadgeIdClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await BadgeContract.setMinisterBadgeId(this.state.tokenId)
+    await BadgeContract.setMinisterBadgeId(this.state.tokenId);
     event.preventDefault();
   }
 
@@ -36,7 +36,7 @@ class SetMinisterBadgeIdClass extends React.Component {
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="tokenId">Token Id</InputLabel>
           <OutlinedInput id="tokenId" type="text" value={this.state.tokenId}
-                         onChange={this.handleChange} label="Token Id"/>
+            onChange={this.handleChange} label="Token Id"/>
         </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"

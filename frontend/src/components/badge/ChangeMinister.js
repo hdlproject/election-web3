@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import BadgeContract from "../../helpers/BadgeContract";
+import BadgeContract from '../../helpers/BadgeContract';
 
 class ChangeMinisterClass extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class ChangeMinisterClass extends React.Component {
 
   async handleSubmit(event) {
     console.log(this.state);
-    await BadgeContract.changeMinister(this.state.address)
+    await BadgeContract.changeMinister(this.state.address);
     event.preventDefault();
   }
 
@@ -36,7 +36,7 @@ class ChangeMinisterClass extends React.Component {
         <FormControl fullWidth sx={{m: 1}} variant="outlined">
           <InputLabel htmlFor="address">Address</InputLabel>
           <OutlinedInput id="address" type="text" value={this.state.address}
-                         onChange={this.handleChange} label="Address"/>
+            onChange={this.handleChange} label="Address"/>
         </FormControl>
         <Button
           type="submit" fullWidth variant="contained" color="primary"
