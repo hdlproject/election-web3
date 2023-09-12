@@ -2,7 +2,6 @@
 pragma solidity ^0.8.4;
 
 import "./Citizenship.sol";
-import "./Badge.sol";
 
 contract Election {
     struct Electee {
@@ -30,7 +29,6 @@ contract Election {
     event ElectionFinished();
 
     Citizenship private citizenship;
-    Badge private badge;
 
     address public admin;
     mapping(address => Electee) electees;
@@ -42,10 +40,9 @@ contract Election {
     Electee bestElectee;
     address bestElecteeAddress;
 
-    constructor(address citizenshipContractAddress, address badgeContractAddress) {
+    constructor(address citizenshipContractAddress) {
         admin = msg.sender;
         citizenship = Citizenship(citizenshipContractAddress);
-        badge = Badge(badgeContractAddress);
     }
 
     modifier notStarted() {
