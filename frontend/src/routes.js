@@ -1,5 +1,7 @@
 import FaceIcon from '@mui/icons-material/Face';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import Money from '@mui/icons-material/Money';
+import Badge from '@mui/icons-material/Badge';
 import RegisterCitizen from './components/citizenship/RegisterCitizen';
 import AddOwner from './components/citizenship/AddOwner';
 import RemoveOwner from './components/citizenship/RemoveOwner';
@@ -26,21 +28,21 @@ export const routes = [
     path: '/add-owner',
     id: 'add_owner',
     name: 'Add Owner',
-    icon: <HowToVoteIcon/>,
+    icon: <FaceIcon/>,
     page: <AddOwner/>,
   },
   {
     path: '/remove-owner',
     id: 'remove_owner',
     name: 'Remove Owner',
-    icon: <HowToVoteIcon/>,
+    icon: <FaceIcon/>,
     page: <RemoveOwner/>,
   },
   {
     path: '/change-president',
     id: 'change_president',
     name: 'Change President',
-    icon: <HowToVoteIcon/>,
+    icon: <FaceIcon/>,
     page: <ChangePresident/>,
   },
 
@@ -48,14 +50,14 @@ export const routes = [
     path: '/register-electee',
     id: 'register_electee',
     name: 'Register Electee',
-    icon: <FaceIcon/>,
+    icon: <HowToVoteIcon/>,
     page: <RegisterElectee/>,
   },
   {
     path: '/register-elector',
     id: 'register_elector',
     name: 'Register Elector',
-    icon: <FaceIcon/>,
+    icon: <HowToVoteIcon/>,
     page: <RegisterElector/>,
   },
   {
@@ -77,21 +79,21 @@ export const routes = [
     path: '/mint',
     id: 'mint',
     name: 'Mint',
-    icon: <HowToVoteIcon/>,
+    icon: <Money/>,
     page: <Mint/>,
   },
   {
     path: '/burn',
     id: 'burn',
     name: 'Burn',
-    icon: <HowToVoteIcon/>,
+    icon: <Money/>,
     page: <Burn/>,
   },
   {
     path: '/transfer',
     id: 'transfer',
     name: 'Transfer',
-    icon: <HowToVoteIcon/>,
+    icon: <Money/>,
     page: <Transfer/>,
   },
 
@@ -99,14 +101,14 @@ export const routes = [
     path: '/set-minister-badge-id',
     id: 'set_minister_badge_id',
     name: 'Set Minister Badge Id',
-    icon: <HowToVoteIcon/>,
+    icon: <Badge/>,
     page: <SetMinisterBadgeId/>,
   },
   {
     path: '/change-minister',
     id: 'change_minister',
     name: 'Change Minister',
-    icon: <HowToVoteIcon/>,
+    icon: <Badge/>,
     page: <ChangeMinister/>,
   },
 ];

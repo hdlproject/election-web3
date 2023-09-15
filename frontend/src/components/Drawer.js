@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Routes,
@@ -31,6 +32,12 @@ class DrawerClass extends React.Component {
 
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
+  }
+
+  static get propTypes() {
+    return {
+      theme: PropTypes.any,
+    };
   }
 
   handleDrawerOpen = () => {
@@ -133,7 +140,6 @@ class DrawerClass extends React.Component {
 
           <Main open={this.state.open}>
             <DrawerHeader/>
-
             <Routes>
               <Route exact path="/" element={
                 <Typography paragraph>
@@ -143,7 +149,8 @@ class DrawerClass extends React.Component {
 
               {routes.map((item) => (
                 <Route path={item.path} key={JSON.stringify(item)}
-                  element={item.page}/>
+                  element={item.page}
+                />
               ))}
             </Routes>
           </Main>
