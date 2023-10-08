@@ -15,6 +15,7 @@ import Burn from './components/money/Burn';
 import Transfer from './components/money/Transfer';
 import ChangeMinister from './components/badge/ChangeMinister';
 import SetMinisterBadgeId from './components/badge/SetMinisterBadgeId';
+import React from 'react';
 
 export const routes = [
   {
