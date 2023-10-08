@@ -21,6 +21,20 @@ class ToolbarClass extends React.Component {
     this.handleClickTitle = this.handleClickTitle.bind(this);
     this.handleOpenUserMenu = this.handleOpenUserMenu.bind(this);
     this.handleCloseUserMenu = this.handleCloseUserMenu.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+
+    this.userMenu = [
+      {
+        key: 'address',
+        text: this.props.address,
+        action: this.handleCloseUserMenu,
+      },
+      {
+        key: 'logout',
+        text: 'Logout',
+        action: this.handleLogout,
+      },
+    ];
   }
 
   handleClickTitle() {
@@ -39,9 +53,11 @@ class ToolbarClass extends React.Component {
     });
   };
 
-  render() {
-    const settings = [this.props.address];
+  handleLogout = () => {
+    this.props.handleLogout();
+  };
 
+  render() {
     return (
       <Box sx={{display: 'flex', flexGrow: 1}}>
         <Typography variant="h6" component="div" sx={{flexGrow: 1}}
@@ -72,9 +88,9 @@ class ToolbarClass extends React.Component {
             onClose={this.handleCloseUserMenu}
           >
             {
-              settings.map((setting) => (
-                <MenuItem key={setting} onClick={this.handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              this.userMenu.map((setting) => (
+                <MenuItem key={setting.key} onClick={setting.action}>
+                  <Typography textAlign="center">{setting.text}</Typography>
                 </MenuItem>
               ))
             }
