@@ -51,6 +51,10 @@ class LoginClass extends React.Component {
   }
 }
 
+LoginClass.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+};
+
 export default function Login(props) {
   return <LoginClass {...props}/>;
 };

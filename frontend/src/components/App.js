@@ -2,7 +2,6 @@ import './App.css';
 import Drawer from './Drawer';
 import Login from './Login';
 import React from 'react';
-import {useTheme} from '@mui/material/styles';
 import Web3Client from '../helpers/Web3Client';
 
 class AppClass extends React.Component {

@@ -1,6 +1,4 @@
 import React from 'react';
-import MuiAppBar from '@mui/material/AppBar';
-import MuiToolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -9,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class ToolbarClass extends React.Component {
   constructor(props) {
@@ -100,6 +99,12 @@ class ToolbarClass extends React.Component {
     );
   }
 }
+
+ToolbarClass.propTypes = {
+  address: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired,
+};
 
 export default function Toolbar(props) {
   const navigate = useNavigate();

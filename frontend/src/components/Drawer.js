@@ -33,12 +33,6 @@ class DrawerClass extends React.Component {
     this.handleDrawerClose = this.handleDrawerClose.bind(this);
   }
 
-  static get propTypes() {
-    return {
-      theme: PropTypes.any,
-    };
-  }
-
   handleDrawerOpen = () => {
     this.setState({
       open: true,
@@ -182,6 +176,12 @@ class DrawerClass extends React.Component {
     );
   }
 }
+
+DrawerClass.propTypes = {
+  address: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+  theme: PropTypes.object.isRequired,
+};
 
 export default function Drawer(props) {
   const theme = useTheme();
