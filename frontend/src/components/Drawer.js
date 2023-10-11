@@ -150,7 +150,7 @@ class DrawerClass extends React.Component {
 
             <Divider/>
 
-            <Menu/>
+            <Menu open={this.state.open}/>
           </MuiDrawer>
 
           <Main open={this.state.open}>
@@ -163,10 +163,12 @@ class DrawerClass extends React.Component {
 
               {
                 routes.map((item) => (
-                  <Route path={item.path}
-                         key={JSON.stringify(item)}
-                         element={item.page}
-                  />
+                  item.pages.map((subItem) => (
+                    <Route path={subItem.path}
+                           key={JSON.stringify(subItem)}
+                           element={subItem.page}
+                    />
+                  ))
                 ))
               }
             </Routes>

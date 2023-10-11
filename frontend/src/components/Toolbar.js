@@ -54,6 +54,7 @@ class ToolbarClass extends React.Component {
 
   handleLogout = () => {
     this.props.handleLogout();
+    this.props.navigate('/');
   };
 
   render() {
