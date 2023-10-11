@@ -41,8 +41,9 @@ class MenuClass extends React.Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    if (!this.props.open) {
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!prevProps.open) {
       let openMap = new Map();
       routes.map((item) => (
         openMap = openMap.set(item.id, false)
@@ -52,8 +53,6 @@ class MenuClass extends React.Component {
         openMap: openMap,
       });
     }
-
-    return true;
   }
 
   render() {
