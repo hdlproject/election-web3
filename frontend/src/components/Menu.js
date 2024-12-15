@@ -41,7 +41,6 @@ class MenuClass extends React.Component {
     });
   }
 
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!prevProps.open) {
       let openMap = new Map();
@@ -62,7 +61,7 @@ class MenuClass extends React.Component {
           routes.map((item) => (
             <React.Fragment key={item.id}>
               <ListItem key={'item-' + item.id} disablePadding
-                        onClick={() => this.handleClickParentMenu(item.id)}>
+                onClick={() => this.handleClickParentMenu(item.id)}>
                 <ListItemButton>
                   <ListItemIcon>
                     {item.icon}
@@ -76,13 +75,13 @@ class MenuClass extends React.Component {
               </ListItem>
 
               <Collapse key={'collapse-' + item.id}
-                        in={this.state.openMap.get(item.id) && this.props.open}
-                        timeout="auto" unmountOnExit>
+                in={this.state.openMap.get(item.id) && this.props.open}
+                timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   {
                     item.pages.map((subItem) => (
                       <ListItem key={subItem.id} sx={{pl: 4}} disablePadding
-                                onClick={() => this.handleClickMenu(subItem.path)}>
+                        onClick={() => this.handleClickMenu(subItem.path)}>
                         <ListItemButton>
                           <ListItemIcon>
                             {subItem.icon}

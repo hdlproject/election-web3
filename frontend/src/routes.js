@@ -9,7 +9,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import TransferIcon from '@mui/icons-material/TransferWithinAStation';
 import PaidIcon from '@mui/icons-material/Paid';
-import Badge from '@mui/icons-material/Badge';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import RemoveModeratorIcon from '@mui/icons-material/RemoveModerator';
@@ -65,7 +64,6 @@ export const routes = [
     ],
   },
 
-
   {
     id: 'election',
     name: 'Election',
@@ -102,7 +100,6 @@ export const routes = [
     ],
   },
 
-
   {
     id: 'money',
     name: 'Money',
@@ -131,7 +128,6 @@ export const routes = [
       },
     ],
   },
-
 
   {
     id: 'badge',

@@ -1,10 +1,9 @@
-# Simple Ethereum App
+# Election Backend
+A Solidity project that contains a backend part of an election app.
 
-## How to Run
-- Install Truffle
-```shell
-$ npm install -g truffle
-```
+## How to Prepare
+### Run Ganache
+To run a personal blockchain network in local environment:
 - Download Ganache from [here](https://trufflesuite.com/ganache/index.html)
 - Install Ganache
 ```shell
@@ -12,7 +11,7 @@ $ chmod u+x <ganache.AppImage>
 $ ./<ganache.AppImage>
 ```
 
-## How to Build Graph API
+### Deploy & Verify Smart Contract to Holesky Testnet
 ```shell
 $ yarn run deployholesky
 $ yarn run verifyholesky <contract_name>
@@ -31,6 +30,20 @@ $ cd ./graph/citizenship
 $ npx graph codegen && npx graph build
 $ npx graph deploy citizenship --version-label v0.0.1
 ```
+
+## Smart Contract
+### Holesky
+- Migrations: 0xfa800DC69F30577D235d7b461504fB5E24B47500
+- Citizenship: 0x5aE6D570c89025135e55B6dfff3AeEC72E68AFC2
+- Money: 0x3c8704BD9DB441BD2D83fa80044b7E2Bd80D72dC
+- Election: 0xf64D879cc6a5210D1503a87a521A5c08C9604ABe
+- Badge: 0x387F0dF9e547D180BD7Feabb0039EB050B888aA5
+### Sepolia
+- Migrations: 0x8f83a86b421A4940e96236423eA1579F869E6526
+- Citizenship: 
+- Money: 
+- Election: 
+- Badge: 
 
 ## How to Test
 List of accounts

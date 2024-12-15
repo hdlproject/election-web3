@@ -119,5 +119,5 @@ dist
 .idea/
 
 # Truffle-related ignorance
-build/
+build*/
 flat_contracts/

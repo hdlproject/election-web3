@@ -56,7 +56,7 @@ contract Conference is Governor, GovernorCompatibilityBravo, GovernorVotes, Gove
     function getVotes(address account, uint256 blockNumber)
     public
     view
-    override(IGovernor, GovernorVotes)
+    override(Governor, IGovernor)
     returns (uint256)
     {
         return super.getVotes(account, blockNumber);
@@ -84,6 +84,14 @@ contract Conference is Governor, GovernorCompatibilityBravo, GovernorVotes, Gove
     override(Governor, GovernorTimelockControl)
     {
         super._execute(proposalId, targets, values, calldatas, descriptionHash);
+    }
+
+    function cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash)
+    public
+    override(Governor, IGovernor, GovernorCompatibilityBravo)
+    returns (uint256)
+    {
+        return super.cancel(targets, values, calldatas, descriptionHash);
     }
 
     function _cancel(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash)

@@ -29,7 +29,10 @@ class AlchemyClient {
   async getMaxPriorityFeePerGas() {
     const options = {
       method: 'POST',
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         id: 1,
         jsonrpc: '2.0',
