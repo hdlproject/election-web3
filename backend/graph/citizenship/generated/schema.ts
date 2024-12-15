@@ -8,10 +8,10 @@ import {
   store,
   Bytes,
   BigInt,
-  BigDecimal
+  BigDecimal,
 } from "@graphprotocol/graph-ts";
 
-export class Registered extends Entity {
+export class ExampleEntity extends Entity {
   constructor(id: Bytes) {
     super();
     this.set("id", Value.fromBytes(id));
@@ -19,25 +19,25 @@ export class Registered extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Registered entity without an ID");
+    assert(id != null, "Cannot save ExampleEntity entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.BYTES,
-        `Entities of type Registered must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type ExampleEntity must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
-      store.set("Registered", id.toBytes().toHexString(), this);
+      store.set("ExampleEntity", id.toBytes().toHexString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): Registered | null {
-    return changetype<Registered | null>(
-      store.get_in_block("Registered", id.toHexString())
+  static loadInBlock(id: Bytes): ExampleEntity | null {
+    return changetype<ExampleEntity | null>(
+      store.get_in_block("ExampleEntity", id.toHexString()),
     );
   }
 
-  static load(id: Bytes): Registered | null {
-    return changetype<Registered | null>(
-      store.get("Registered", id.toHexString())
+  static load(id: Bytes): ExampleEntity | null {
+    return changetype<ExampleEntity | null>(
+      store.get("ExampleEntity", id.toHexString()),
     );
   }
 
@@ -52,6 +52,19 @@ export class Registered extends Entity {
 
   set id(value: Bytes) {
     this.set("id", Value.fromBytes(value));
+  }
+
+  get count(): BigInt {
+    let value = this.get("count");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set count(value: BigInt) {
+    this.set("count", Value.fromBigInt(value));
   }
 
   get citizenAddress(): Bytes {
@@ -78,57 +91,5 @@ export class Registered extends Entity {
 
   set citizenId(value: string) {
     this.set("citizenId", Value.fromString(value));
-  }
-
-  get citizenAge(): i32 {
-    let value = this.get("citizenAge");
-    if (!value || value.kind == ValueKind.NULL) {
-      return 0;
-    } else {
-      return value.toI32();
-    }
-  }
-
-  set citizenAge(value: i32) {
-    this.set("citizenAge", Value.fromI32(value));
-  }
-
-  get blockNumber(): BigInt {
-    let value = this.get("blockNumber");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set blockNumber(value: BigInt) {
-    this.set("blockNumber", Value.fromBigInt(value));
-  }
-
-  get blockTimestamp(): BigInt {
-    let value = this.get("blockTimestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set blockTimestamp(value: BigInt) {
-    this.set("blockTimestamp", Value.fromBigInt(value));
-  }
-
-  get transactionHash(): Bytes {
-    let value = this.get("transactionHash");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
-  }
-
-  set transactionHash(value: Bytes) {
-    this.set("transactionHash", Value.fromBytes(value));
   }
 }
