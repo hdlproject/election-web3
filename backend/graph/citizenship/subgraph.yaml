@@ -1,24 +1,46 @@
-specVersion: 0.0.5
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Citizenship
-    network: goerli
+    name: Contract
+    network: holesky
     source:
-      address: "0xe2A1A6DC1Fd80E56544173C4489563F1d3e4EBbf"
-      abi: Citizenship
-      startBlock: 0
+      address: "0x5aE6D570c89025135e55B6dfff3AeEC72E68AFC2"
+      abi: Contract
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Registered
+        - CitizenRegistered
+        - OwnerAdded
+        - OwnerRemoved
+        - OwnershipTransferred
+        - PresidentChanged
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
       abis:
-        - name: Citizenship
-          file: ./abis/Citizenship.json
+        - name: Contract
+          file: ./abis/Contract.json
       eventHandlers:
-        - event: Registered(address,string,uint8)
-          handler: handleRegistered
-      file: ./src/citizenship.ts
+        - event: CitizenRegistered(address,string,uint8)
+          handler: handleCitizenRegistered
+        - event: OwnerAdded(address)
+          handler: handleOwnerAdded
+        - event: OwnerRemoved(address)
+          handler: handleOwnerRemoved
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PresidentChanged(address,address)
+          handler: handlePresidentChanged
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+      file: ./src/contract.ts

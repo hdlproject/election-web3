@@ -1,9 +1,6 @@
-type Registered @entity(immutable: true) {
+type ExampleEntity @entity {
   id: Bytes!
+  count: BigInt!
   citizenAddress: Bytes! # address
   citizenId: String! # string
-  citizenAge: Int! # uint8
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
 }

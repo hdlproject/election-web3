@@ -1,8 +1,7 @@
 {
-  "goerli": {
-    "Citizenship": {
-      "address": "0xe2A1A6DC1Fd80E56544173C4489563F1d3e4EBbf",
-      "startBlock": 0
+  "holesky": {
+    "Contract": {
+      "address": "0x5aE6D570c89025135e55B6dfff3AeEC72E68AFC2"
     }
   }
 }
