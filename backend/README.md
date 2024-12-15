@@ -22,7 +22,7 @@ $ mkdir -p ./flat_contracts
 $ npx truffle-flattener ./contracts/Citizenship.sol > ./flat_contracts/Citizenship.sol
 ```
 
-### Deploy Subgraph Graph API
+### Deploy Subgraph The Graph
 ```shell
 $ npx graph init citizenship ./graph/citizenship \
     --abi=./build/contracts/Citizenship.json \
@@ -37,6 +37,7 @@ $ cd ./graph/citizenship
 $ npx graph codegen && npx graph build
 $ npx graph deploy citizenship --version-label v0.0.1
 ```
+Open [The Graph Studio](https://thegraph.com/studio/subgraph/citizenship/playground) to start querying the data!
 
 ## Smart Contract
 ### Holesky
