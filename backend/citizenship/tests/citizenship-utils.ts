@@ -9,7 +9,7 @@ import {
   RoleAdminChanged,
   RoleGranted,
   RoleRevoked
-} from "../generated/Contract/Contract"
+} from "../generated/Citizenship/Citizenship"
 
 export function createCitizenRegisteredEvent(
   citizenAddress: Address,
