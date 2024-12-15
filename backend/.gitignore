@@ -120,3 +120,4 @@ dist
 
 # Truffle-related ignorance
 build/
+flat_contracts/

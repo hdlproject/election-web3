@@ -14,12 +14,22 @@ $ ./<ganache.AppImage>
 
 ## How to Build Graph API
 ```shell
-$ yarn global add @graphprotocol/graph-cli
-$ graph init --studio citizenship
-$ graph auth --studio 22844a2041e8319d42dc0a938e439e8f
-$ cd citizenship
-$ graph codegen && graph build
-$ graph deploy --studio citizenship
+$ yarn run deployholesky
+$ yarn run verifyholesky <contract_name>
+```
+Flatten smart contract to verify it manually. Don't forget to remove duplicate license comments.
+```shell
+$ mkdir -p ./flat_contracts
+$ npx truffle-flattener ./contracts/Citizenship.sol > ./flat_contracts/Citizenship.sol
+```
+
+### Deploy Subgraph Graph API
+```shell
+$ npx graph init citizenship ./graph/citizenship --abi=./build/contracts/Citizenship.json --from-contract 0x5aE6D570c89025135e55B6dfff3AeEC72E68AFC2 --network holesky --protocol ethereum
+$ npx graph auth 22844a2041e8319d42dc0a938e439e8f
+$ cd ./graph/citizenship
+$ npx graph codegen && npx graph build
+$ npx graph deploy citizenship --version-label v0.0.1
 ```
 
 ## How to Test
