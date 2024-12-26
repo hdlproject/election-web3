@@ -44,19 +44,6 @@ class AlchemyClient {
     const rawTransaction = await this.wallet.signTransaction(transaction);
     return await this.alchemy.sendTransaction(rawTransaction);
   }
-
-  async getSigner() {
-    if (!this.signer) {
-      await this.alchemy.send('eth_requestAccounts', []);
-      this.signer = this.alchemy.getSigner();
-    }
-    return this.signer;
-  }
-
-  async getAddress() {
-    const signer = await this.getSigner();
-    return await signer.getAddress();
-  }
 }
 
 export default new AlchemyClient();
