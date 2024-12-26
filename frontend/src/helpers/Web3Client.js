@@ -1,8 +1,8 @@
-import {providers} from 'ethers';
+import {BrowserProvider} from 'ethers';
 
 class Web3Client {
   constructor() {
-    this.provider = new providers.Web3Provider(window.ethereum);
+    this.provider = new BrowserProvider(window.ethereum);
   }
 
   async getSigner() {

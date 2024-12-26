@@ -1,13 +1,10 @@
-import {providers, Wallet} from 'ethers';
+import {JsonRpcProvider, Wallet} from 'ethers';
 
 class AlchemyClient {
   constructor() {
-    this.alchemy = new providers.AlchemyProvider(
-      AlchemyClient.getAlchemyBlockchainNetwork(process.env.REACT_APP_BLOCKCHAIN_NETWORK),
-      process.env.REACT_APP_ALCHEMY_API_KEY,
-    );
+    this.alchemy = new JsonRpcProvider(process.env.REACT_APP_ALCHEMY_HTTPS);
 
-    this.wallet = new Wallet(process.env.REACT_APP_PRIVATE_KEY, this.alchemy);
+    this.wallet = Wallet.fromPhrase(process.env.REACT_APP_PRIVATE_KEY).connect(this.alchemy);
   }
 
   static getAlchemyBlockchainNetwork(blockchainNetwork) {
@@ -46,6 +43,19 @@ class AlchemyClient {
   async sendTransaction(transaction) {
     const rawTransaction = await this.wallet.signTransaction(transaction);
     return await this.alchemy.sendTransaction(rawTransaction);
+  }
+
+  async getSigner() {
+    if (!this.signer) {
+      await this.alchemy.send('eth_requestAccounts', []);
+      this.signer = this.alchemy.getSigner();
+    }
+    return this.signer;
+  }
+
+  async getAddress() {
+    const signer = await this.getSigner();
+    return await signer.getAddress();
   }
 }
 
