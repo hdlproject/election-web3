@@ -10,44 +10,41 @@ contract Citizenship is AccessControl, Ownable {
         uint8 age;
     }
 
-    bytes32 public constant OWNER = keccak256("OWNER");
     bytes32 public constant PRESIDENT = keccak256("PRESIDENT");
+    bytes32 public constant ELECTION_ADMIN = keccak256("ELECTION_ADMIN");
+
+    // New state for authorized Election contract
+    address public electionContract;
 
     error CitizenAlreadyRegistered(address citizenAddress);
     error CitizenInvalidId();
+    error ElectionContractNotSet();
+    error ElectionContractUnauthorized(address caller);
+    error ElectionContractInvalid(address electionAddress);
+    error PresidentNotCitizen(address presidentAddress); // new error
 
     event CitizenRegistered(address citizenAddress, string citizenId, uint8 citizenAge);
-    event OwnerAdded(address ownerAddress);
-    event OwnerRemoved(address ownerAddress);
     event PresidentChanged(address oldPresidentAddress, address newPresidentAddress);
+    event ElectionAdminAdded(address electionAdminAddress);
+    event ElectionAdminRemoved(address electionAdminAddress);
+    event ElectionContractSet(address oldElectionContract, address newElectionContract); // new event
 
-    address public admin;
     mapping(address => Citizen) citizens;
     address[] citizensByAddress;
     address presidentAddress;
 
-    constructor() {
-        admin = msg.sender;
-    }
+    constructor() {}
 
-    function registerCitizen(address _address, string memory _id, uint8 _age) public {
-        require(msg.sender == admin);
-
+    function registerCitizen(address _address, string memory _id, uint8 _age) public onlyOwner {
         if (bytes(_id).length == 0) {
             revert CitizenInvalidId();
         }
-
         if (bytes(citizens[_address].id).length != 0) {
             revert CitizenAlreadyRegistered({citizenAddress: _address});
         }
-
-        Citizen memory citizen = Citizen({
-            id: _id,
-            age: _age
-        });
+        Citizen memory citizen = Citizen({id: _id, age: _age});
         citizens[_address] = citizen;
         citizensByAddress.push(_address);
-
         emit CitizenRegistered(_address, _id, _age);
     }
 
@@ -55,40 +52,61 @@ contract Citizenship is AccessControl, Ownable {
         return (citizens[_address].id, citizens[_address].age);
     }
 
-    function getCitizens() public view returns (address[] memory citizenAddresses){
+    function getCitizens() public view returns (address[] memory citizensByAddress) {
         return citizensByAddress;
-    }
-
-    function addOwner(address _address)
-    public
-    onlyOwner
-    {
-        _grantRole(OWNER, _address);
-
-        emit OwnerAdded(_address);
-    }
-
-    function removeOwner(address _address)
-    public
-    onlyOwner
-    {
-        _revokeRole(OWNER, _address);
-
-        emit OwnerRemoved(_address);
     }
 
     function changePresident(address _address)
     public
-    onlyRole(OWNER)
     {
-        if (presidentAddress != address(0)) {
-            _revokeRole(PRESIDENT, _address);
+        if (electionContract == address(0)) {
+            revert ElectionContractNotSet();
         }
-
+        if (msg.sender != electionContract) {
+            revert ElectionContractUnauthorized(msg.sender);
+        }
+        if (bytes(citizens[_address].id).length == 0) {
+            revert PresidentNotCitizen(_address);
+        }
+        if (presidentAddress != address(0)) {
+            _revokeRole(PRESIDENT, presidentAddress);
+        }
         address oldPresidentAddress = presidentAddress;
         presidentAddress = _address;
         _grantRole(PRESIDENT, _address);
-
         emit PresidentChanged(oldPresidentAddress, presidentAddress);
+    }
+
+    function getPresident() external view returns (address) {
+        return presidentAddress;
+    }
+
+    // Set / update the authorized Election contract
+    function setElectionContract(address _address)
+    public
+    onlyOwner
+    {
+        if (_address == address(0)) {
+            revert ElectionContractInvalid(_address);
+        }
+        address old = electionContract;
+        electionContract = _address;
+        emit ElectionContractSet(old, _address);
+    }
+
+    function addElectionAdmin(address _address)
+    public
+    onlyOwner
+    {
+        _grantRole(ELECTION_ADMIN, _address);
+        emit ElectionAdminAdded(_address);
+    }
+
+    function removeElectionAdmin(address _address)
+    public
+    onlyOwner
+    {
+        _revokeRole(ELECTION_ADMIN, _address);
+        emit ElectionAdminRemoved(_address);
     }
 }

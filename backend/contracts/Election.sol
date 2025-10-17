@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "./Citizenship.sol";
+// Use interface instead of full contract to decouple
+import "./interfaces/ICitizenship.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract Election {
+contract Election is ReentrancyGuard {
     struct Electee {
         string id;
         uint256 voteCount;
@@ -21,6 +23,7 @@ contract Election {
     error ElectorAlreadyRegistered(address electorAddress);
     error ElectorNotRegistered(address electorAddress);
     error ElectorAlreadyElect(address electorAddress);
+    error NotElectionAdmin(address caller); // new error
 
     event ElecteeRegistered(address electeeAddress, string electeeId, uint8 electeeAge);
     event ElectorRegistered(address electorAddress, string electorId, uint8 electorAge);
@@ -28,9 +31,8 @@ contract Election {
     event ElectionStarted();
     event ElectionFinished();
 
-    Citizenship private citizenship;
+    ICitizenship private citizenship; // changed type
 
-    address public admin;
     mapping(address => Electee) electees;
     mapping(address => Elector) electors;
     address[] electeesByAddress;
@@ -41,8 +43,7 @@ contract Election {
     address bestElecteeAddress;
 
     constructor(address citizenshipContractAddress) {
-        admin = msg.sender;
-        citizenship = Citizenship(citizenshipContractAddress);
+        citizenship = ICitizenship(citizenshipContractAddress);
     }
 
     modifier notStarted() {
@@ -56,9 +57,14 @@ contract Election {
         _;
     }
 
-    function registerElectee(address _address) public notFinished {
-        require(msg.sender == admin);
+    modifier onlyElectionAdmin() {
+        if (!citizenship.hasRole(citizenship.ELECTION_ADMIN(), msg.sender)) {
+            revert NotElectionAdmin(msg.sender);
+        }
+        _;
+    }
 
+    function registerElectee(address _address) public notStarted onlyElectionAdmin {
         (string memory _id, uint8 _age) = citizenship.getCitizen(_address);
         if (bytes(_id).length == 0) {
             revert CitizenNotRegistered({citizenAddress: _address});
@@ -87,9 +93,7 @@ contract Election {
         return electeesByAddress;
     }
 
-    function registerElector(address _address) public notFinished {
-        require(msg.sender == admin);
-
+    function registerElector(address _address) public notStarted onlyElectionAdmin {
         (string memory _id, uint8 _age) = citizenship.getCitizen(_address);
         if (bytes(_id).length == 0) {
             revert CitizenNotRegistered({citizenAddress: _address});
@@ -109,9 +113,9 @@ contract Election {
         emit ElectorRegistered(_address, _id, _age);
     }
 
-    function getElector(address _address) public view returns (string memory id, uint8 age, bool alreadyElect) {
+    function getElector(address _address) public view returns (string memory id, uint8 age, bool alreadyElected) {
         (id, age) = citizenship.getCitizen(_address);
-        alreadyElect = electors[_address].alreadyElect;
+        alreadyElected = electors[_address].alreadyElect;
     }
 
     function getElectors() public view returns (address[] memory electorAddresses){
@@ -157,17 +161,25 @@ contract Election {
         electeeAddress = bestElecteeAddress;
     }
 
-    function start() public notStarted {
+    function start() public nonReentrant notStarted onlyElectionAdmin {
+        require(electeesByAddress.length > 0, "Election: no candidates");
+
         isStarted = true;
 
         emit ElectionStarted();
     }
 
-    function finish() public notFinished {
+    function finish() public nonReentrant notFinished onlyElectionAdmin {
+        require(bestElecteeAddress != address(0), "Election: no winner");
+
         isFinished = true;
 
         citizenship.changePresident(bestElecteeAddress);
 
         emit ElectionFinished();
+    }
+
+    function getStatus() public view returns (bool started, bool finished, address leader, uint256 leaderVotes) {
+        return (isStarted, isFinished, bestElecteeAddress, bestElectee.voteCount);
     }
 }
