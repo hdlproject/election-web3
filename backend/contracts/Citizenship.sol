@@ -13,14 +13,12 @@ contract Citizenship is AccessControl, Ownable {
     bytes32 public constant PRESIDENT = keccak256("PRESIDENT");
     bytes32 public constant ELECTION_ADMIN = keccak256("ELECTION_ADMIN");
 
-    // New state for authorized Election contract
     address public electionContract;
 
     error CitizenAlreadyRegistered(address citizenAddress);
     error CitizenInvalidId();
     error ElectionContractNotSet();
     error ElectionContractUnauthorized(address caller);
-    error ElectionContractInvalid(address electionAddress);
     error PresidentNotCitizen(address presidentAddress); // new error
 
     event CitizenRegistered(address citizenAddress, string citizenId, uint8 citizenAge);
@@ -34,6 +32,16 @@ contract Citizenship is AccessControl, Ownable {
     address presidentAddress;
 
     constructor() {}
+
+    function setElectionContract(address _address)
+    public
+    onlyOwner
+    {
+        require(_address != address(0), "Citizenship: invalid election contract address");
+        address old = electionContract;
+        electionContract = _address;
+        emit ElectionContractSet(old, _address);
+    }
 
     function registerCitizen(address _address, string memory _id, uint8 _age) public onlyOwner {
         if (bytes(_id).length == 0) {
@@ -79,19 +87,6 @@ contract Citizenship is AccessControl, Ownable {
 
     function getPresident() external view returns (address) {
         return presidentAddress;
-    }
-
-    // Set / update the authorized Election contract
-    function setElectionContract(address _address)
-    public
-    onlyOwner
-    {
-        if (_address == address(0)) {
-            revert ElectionContractInvalid(_address);
-        }
-        address old = electionContract;
-        electionContract = _address;
-        emit ElectionContractSet(old, _address);
     }
 
     function addElectionAdmin(address _address)
