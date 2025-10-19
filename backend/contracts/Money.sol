@@ -102,4 +102,8 @@ contract Money is ERC20, Ownable, Pausable {
     {
         return super.transferFrom(from, to, amount);
     }
+
+    function getCitizenshipContract() external view returns (address) {
+        return address(citizenship);
+    }
 }
