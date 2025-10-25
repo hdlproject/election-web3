@@ -1,5 +1,8 @@
 const Money = artifacts.require('Money');
+const Citizenship = artifacts.require('Citizenship');
 
 module.exports = async function(deployer) {
-  await deployer.deploy(Money, process.env.CITIZENSHIP_CONTRACT_ADDRESS);
+  const citizenship = await Citizenship.deployed();
+
+  await deployer.deploy(Money, citizenship.address, 0);
 };

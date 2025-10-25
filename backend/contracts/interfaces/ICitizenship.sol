@@ -19,7 +19,7 @@ interface ICitizenship {
     // Citizen management
     function registerCitizen(address _address, string memory _id, uint8 _age) external;
     function getCitizen(address _address) external view returns (string memory id, uint8 age);
-    function getCitizens() public view returns (address[] memory citizensByAddress);
+    function getCitizens() external view returns (address[] memory);
 
     // Election contract linkage
     function setElectionContract(address _address) external;

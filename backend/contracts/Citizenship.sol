@@ -60,7 +60,7 @@ contract Citizenship is AccessControl, Ownable {
         return (citizens[_address].id, citizens[_address].age);
     }
 
-    function getCitizens() public view returns (address[] memory citizensByAddress) {
+    function getCitizens() public view returns (address[] memory citizenAddresses) {
         return citizensByAddress;
     }
 

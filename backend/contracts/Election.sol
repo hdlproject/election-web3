@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 // Use interface instead of full contract to decouple
 import "./interfaces/ICitizenship.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract Election is ReentrancyGuard {
     struct Electee {
