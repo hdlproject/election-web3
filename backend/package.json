@@ -27,6 +27,7 @@
     "deployholesky": "truffle migrate --openssl-legacy-provider --network holesky",
     "verifyholesky": "truffle run verify --network holesky",
     "deploysepolia": "truffle migrate --openssl-legacy-provider --network sepolia",
-    "verifysepolia": "truffle run verify --network sepolia"
+    "verifysepolia": "truffle run verify --network sepolia",
+    "abi": "bash scripts/extract-abi.sh"
   }
 }
