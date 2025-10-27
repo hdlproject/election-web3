@@ -3,14 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./addresses.json": "./dist/addresses.json",
+    "./abi/*": "./dist/abi/*"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "sync:abi": "bash scripts/sync-abi.sh",
     "gen:addresses": "node scripts/generate-addresses.js",
-    "test": "node --loader ts-node/esm test/basic.test.ts"
+    "test": "node --loader ts-node/esm test/basic.test.ts",
+    "postbuild": "bash scripts/sync-abi.sh",
+    "prepare": "yarn build"
   },
   "dependencies": {
     "ethers": "^6.13.0"
