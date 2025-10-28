@@ -11,7 +11,7 @@
       "default": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./addresses.json": "./dist/addresses.json",
+    "./contract_addresses.json": "./dist/contract_addresses.json",
     "./abi/*": "./dist/abi/*"
   },
   "files": [

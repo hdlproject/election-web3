@@ -61,12 +61,12 @@ const contract = getReadContract('Election', rp);
 ```
 
 ## Address Management Enhancements
-- Load from JSON file: `await loadAddressesFromFile('./addresses.json')` after bundling.
+- Load from JSON file: `await loadAddressesFromFile('./contract_addresses.json')` after bundling.
 - Generate a JSON from env vars:
 ```bash
 CONTRACT_CITIZENSHIP=0x... CONTRACT_MONEY=0x... node scripts/generate-addresses.js
 ```
-Creates `addresses.json` you can commit or consume.
+Creates `contract_addresses.json` you can commit or consume.
 
 ## Aggregate Contracts
 ```ts

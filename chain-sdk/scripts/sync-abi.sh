@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sync selected contract ABI JSON files from backend/abi to chain-sdk/abi and dist/abi, also copy addresses.json into dist if present.
+# Sync selected contract ABI JSON files from backend/abi to chain-sdk/abi and dist/abi, also copy contract_addresses.json into dist if present.
 # Usage: bash scripts/sync-abi.sh [--all]
 # If --all is provided, copies every JSON in backend/abi. Otherwise only core contracts.
 set -euo pipefail
@@ -9,7 +9,7 @@ SDK_ROOT="$SCRIPT_DIR/.."
 BACKEND_ABI_DIR="$SDK_ROOT/../backend/abi"
 DEST_ABI_DIR="$SDK_ROOT/abi"
 DIST_ABI_DIR="$SDK_ROOT/dist/abi"
-ADDRESSES_JSON="$SDK_ROOT/addresses.json"
+ADDRESSES_JSON="$SDK_ROOT/contract_addresses.json"
 CORE_CONTRACTS=(Citizenship Money Election Badge)
 
 if [ ! -d "$BACKEND_ABI_DIR" ]; then
@@ -38,12 +38,12 @@ else
   done
 fi
 
-# Copy addresses.json into dist if it exists
+# Copy contract_addresses.json into dist if it exists
 if [ -f "$ADDRESSES_JSON" ]; then
-  cp -f "$ADDRESSES_JSON" "$SDK_ROOT/dist/addresses.json"
-  echo "Copied addresses.json into dist"
+  cp -f "$ADDRESSES_JSON" "$SDK_ROOT/dist/contract_addresses.json"
+  echo "Copied contract_addresses.json into dist"
 else
-  echo "addresses.json not found at $ADDRESSES_JSON (run generate-addresses script if needed)"
+  echo "contract_addresses.json not found at $ADDRESSES_JSON (run generate-addresses script if needed)"
 fi
 
 echo "ABI & addresses sync complete -> $DEST_ABI_DIR and $DIST_ABI_DIR"

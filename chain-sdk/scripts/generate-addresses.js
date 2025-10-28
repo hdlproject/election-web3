@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Minimal address extraction from Truffle artifacts.
 // Scans backend/build/contracts for core contract artifact JSON files and
-// takes the FIRST network entry (Object.keys order) for each to build addresses.json.
+// takes the FIRST network entry (Object.keys order) for each to build contract_addresses.json.
 // Contracts: Citizenship, Money, Election, Badge
 // Usage: node scripts/generate-addresses.js
 
@@ -12,7 +12,7 @@ const CORE_CONTRACTS = ['Citizenship','Money','Election','Badge'];
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const artifactsDir = path.resolve(__dirname, '../../backend/build/contracts');
-const outputPath = path.resolve(__dirname, '../addresses.json');
+const outputPath = path.resolve(__dirname, '../contract_addresses.json');
 
 async function main() {
   const out = {};
