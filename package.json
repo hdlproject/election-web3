@@ -1,0 +1,9 @@
+{
+  "name": "election-web3-root",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "git submodule update --init --recursive && cd chain-sdk && yarn install --silent && yarn build && cd ../frontend && (bun install --no-progress || npm install) && (bun run build || npm run build)"
+  }
+}
+
