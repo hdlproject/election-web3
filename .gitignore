@@ -1,3 +1,6 @@
 /node_modules
 
 .idea
+
+# Ignore built frontend artifacts
+frontend/dist/
